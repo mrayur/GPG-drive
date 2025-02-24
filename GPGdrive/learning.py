@@ -1,7 +1,4 @@
-import numpy as np
 import casadi as cs
-import opengen as og
-import os, sys
 from . import solvers
 from .settings import OnlineLearningSettings
 
