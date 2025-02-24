@@ -4,14 +4,9 @@ from GPGdrive.world import World
 from GPGdrive.experiment import Experiment
 from GPGdrive.visualize import Visualizer
 import GPGdrive.dynamics as dynamics
-import GPGdrive.settings as settings
-import GPGdrive.collision as collision
-import casadi as cs
-
 
 def world_overtaking_scenario(solver_settings):
     """ Defines the set-up of an overtaking scenario
-
     Parameters
     ---------- 
     collision_mode : str, optional

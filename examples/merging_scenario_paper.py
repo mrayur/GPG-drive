@@ -1,20 +1,24 @@
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from GPGdrive.world import World
+
+#  1.__file__ 是一个特殊变量，表示当前 Python 脚本文件的路径,只在执行实际的脚本文件时才会被定义;
+#  2.os.path.dirname(path) 函数会返回给定路径的父目录;
+#  3.sys.path 是一个列表，包含 Python 在运行时查找模块的目录。当你 import 一个模块时，Python 会依次检查 sys.path 中的每个目录，直到找到该模块;
+#  4.sys.path.append(path) 会将指定的路径添加到这个模块搜索路径中，使得 Python 能够在这个路径中找到并导入模块。
+
+from GPGdrive.world import World # GPGdrive 是一个包，通常是一个包含 __init__.py 文件的目录，表示这是一个 Python 包,即使 __init__.py 为空，只要这个文件存在，Python 就会把这个目录识别为包。
 from GPGdrive.experiment import Experiment
 from GPGdrive.visualize import Visualizer
 import GPGdrive.dynamics as dynamics
 import GPGdrive.settings as settings
-import GPGdrive.collision as collision
 import GPGdrive.feature as feature
 import casadi as cs
-
 
 def world_merging_scenario(solver_settings, learning_settings, is_human_courteous, is_belief_courteous):
     """ Defines the set-up of a merging scenario """
     Ts = 0.2
     N = 15
-    collision_mode = 'product'
+    collision_mode = 'product'  #豆包说是  碰撞避免  模式
 
     # Initialize the world with a highway with 2 lanes 
     world = World()
@@ -22,9 +26,10 @@ def world_merging_scenario(solver_settings, learning_settings, is_human_courteou
 
     # Initialize the vehicles
     world.Ts = Ts
+    # 两种车辆动力学类型
     dyn_2d = dynamics.CarDynamics(world.Ts, lr=2, lf=2)
     dyn_1d = dynamics.CarDynamicsLongitudinal(world.Ts, lr=2, lf=2)
-
+    # 4辆车及其设置
     id1 = world.add_vehicle('GPGOptimizerCar', dyn_2d, [3., 3., 0., 5.], N, gpg_solver_settings=solver_settings,
                             online_learning_settings=learning_settings)
     id2 = world.add_vehicle('GPGOptimizerCar', dyn_1d, [0., 0., 0., 5.], N, gpg_solver_settings=solver_settings)
@@ -52,7 +57,6 @@ def world_merging_scenario(solver_settings, learning_settings, is_human_courteou
         p2_num = [0.02, p2_control] 
     else:
         p2_num = [10, p2_control]
-
     world.set_reward(id2, r_p2, params=cs.vertcat(p2, pc), param_values=[*p2_num, *pc_num], shared_reward=r_shared)
 
     # Add the 'humans' and the 'obstacles' to the corresponding vehicles
@@ -62,7 +66,6 @@ def world_merging_scenario(solver_settings, learning_settings, is_human_courteou
         p2_num_belief = [10, p2_control]
     
     world.add_human(id1, id2, r_p2, params=p2, param_values=p2_num_belief)
-
     world.add_obstacle(id1, id3)
     world.add_obstacle(id1, id4)
     world.add_human(id2, id1, r_p1, params=p1, param_values=p1_num)
@@ -73,7 +76,6 @@ def world_merging_scenario(solver_settings, learning_settings, is_human_courteou
     world.add_boundary_constraint(id1)
     world.set_collision_avoidance_mode(collision_mode)
     return world
-
 
 def experiment_merging_scenario(is_learning, is_human_courteous, is_belief_courteous):
     experiment = Experiment("merging_scenario", [str(is_learning), str(is_human_courteous), str(is_belief_courteous)])
@@ -108,7 +110,6 @@ def experiment_merging_scenario(is_learning, is_human_courteous, is_belief_court
         experiment.learning_settings.panoc_rebuild_solver = True
         experiment.learning_settings.based_on_original_gpg = False
         experiment.learning_settings.max_time = 0.1
-
         experiment.learning_settings.panoc_tolerance = 1  # OpEn default = 1e-5
         experiment.learning_settings.panoc_initial_tolerance = 1
         experiment.learning_settings.panoc_delta_tolerance_primal_feas = 1e-3

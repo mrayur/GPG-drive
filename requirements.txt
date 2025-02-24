@@ -1,5 +1,5 @@
 # Wheel for panocpy on Linux
-./local_wheels/panocpy-0.0.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_27_x86_64.whl
+#./local_wheels/panocpy-0.0.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_27_x86_64.whl
 
 # Wheel for panocpy on Windows
 #./local_wheels/panocpy-0.0.2-cp39-cp39-win_amd64.whl
