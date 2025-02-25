@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 #  2.os.path.dirname(path) 函数会返回给定路径的父目录;
 #  3.sys.path 是一个列表，包含 Python 在运行时查找模块的目录。当你 import 一个模块时，Python 会依次检查 sys.path 中的每个目录，直到找到该模块;
 #  4.sys.path.append(path) 会将指定的路径添加到这个模块搜索路径中，使得 Python 能够在这个路径中找到并导入模块。
-
+# GPG-drive目录下查找GPGdrive这个包，并导入world,experiment等模块
 from GPGdrive.world import World # GPGdrive 是一个包，通常是一个包含 __init__.py 文件的目录，表示这是一个 Python 包,即使 __init__.py 为空，只要这个文件存在，Python 就会把这个目录识别为包。
 from GPGdrive.experiment import Experiment
 from GPGdrive.visualize import Visualizer

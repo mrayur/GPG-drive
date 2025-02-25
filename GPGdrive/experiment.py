@@ -41,30 +41,6 @@ class Experiment(object):
         self.logger_settings = settings.LoggerSettings(directory_name)
         self.pyglet_visualization_settings = settings.PygletVisualizationSettings()
 
-    #以下函数好像均未被使用
-    # def build_world(self):
-    #     try:
-    #         self.world = getattr(world, 'world_' + self.name_experiment)(self.solver_settings, self.learning_settings,
-    #                                                                      *self.experiment_variant[1:])
-    #         self.data_visualization_windows = settings.default_data_visualization_windows(self.world)
-    #     except:
-    #         pass
-    #     return
-
-    def set_data_visualization_window(self, window, id_list):
-        """ Adds a visualization for the current run
-
-        See plot_trajectories.py for more info
-
-        Parameters
-        ----------
-        window : str
-            name of the visualized variable
-        id_list : list
-            list of ids relevant for visualizing the variable
-        """
-        self.data_visualization_windows[window] = id_list
-
     def __getstate__(self):
         odict = self.__dict__.copy()
         del odict['world']

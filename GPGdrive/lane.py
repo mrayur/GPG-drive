@@ -22,9 +22,9 @@ class StraightLane(Lane):
     w : float
         the width of the lane
     m : list
-        the vector along the straight lane
+        the vector along the straight lane，沿直车道的向量
     n : list
-        the normal vector on the straight lane
+        the normal vector on the straight lane，直车道的法向量
     """
     def __init__(self, p, q, w):
         """
